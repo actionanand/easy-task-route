@@ -1,6 +1,7 @@
 # Easy Task (Angular App with routing)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.3.
+This project is the extension of [Essentials-18](https://github.com/actionanand/essentials-18)
 
 ## Cloning Guide
 

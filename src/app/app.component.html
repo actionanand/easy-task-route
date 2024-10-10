@@ -1,4 +1,32 @@
-{{ title }}
+<app-header />
 
+<main>
+  <!-- 
+  <ul id="users">
+    <li *ngFor="let user of users">
+      <app-user [id]="user.id" [peyar]="user.name" [avatar]="user.avatar" (selectUser)="onSelectUser($event)" />
+    </li>
+  </ul> 
+  -->
+
+  <ul id="users">
+    @for (user of users; track user.id) {
+      <li>
+        <app-user
+          [id]="user.id"
+          [peyar]="user.name"
+          [avatar]="user.avatar"
+          (selectUser)="onSelectUser($event)"
+          [selected]="user.id === selectedUserId" />
+      </li>
+    }
+  </ul>
+
+  @if (selectedUser) {
+    <app-tasks [peyar]="selectedUser.name" [id]="selectedUser.id" />
+  } @else {
+    <p id="fallback">{{ fallbackStatement }}</p>
+  }
+</main>
 
 <router-outlet />
