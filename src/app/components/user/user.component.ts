@@ -1,14 +1,14 @@
-import { Component, EventEmitter, input, Input, Output } from '@angular/core';
-// import { output } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 
 import { CardComponent } from '../../shared/ui/card/card.component';
 
 import { capitalize1stLetter } from '../../shared/functions/capitalize1stLetter';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CardComponent],
+  imports: [RouterLink, RouterLinkActive, CardComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
@@ -21,14 +21,4 @@ export class UserComponent {
   });
 
   id = input.required<string>();
-
-  selected = input.required<boolean>();
-
-  @Output() selectUser = new EventEmitter<string>();
-
-  // selectUser = output<string>();
-
-  onSelectUser() {
-    this.selectUser.emit(this.id());
-  }
 }

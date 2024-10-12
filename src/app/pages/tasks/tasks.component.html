@@ -4,7 +4,7 @@
 
 <section id="tasks">
   <header>
-    <h2>{{ name() }}'s Tasks</h2>
+    <h2>{{ userName }}'s Tasks</h2>
 
     <menu>
       <button (click)="onStartAddTask()">Add Task</button>
@@ -12,10 +12,12 @@
   </header>
 
   <ul>
-    @for (task of selectedTasks; track task.id) {
+    @for (task of selectedTasks; track task.userId) {
       <li>
         <app-task [taskData]="task" (completeTask)="onCompleteTask($event)" />
       </li>
+    } @empty {
+      <p>{{ noTaskTitle }}</p>
     }
   </ul>
 </section>

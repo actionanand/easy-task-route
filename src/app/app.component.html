@@ -12,21 +12,12 @@
   <ul id="users">
     @for (user of users; track user.id) {
       <li>
-        <app-user
-          [id]="user.id"
-          [peyar]="user.name"
-          [avatar]="user.avatar"
-          (selectUser)="onSelectUser($event)"
-          [selected]="user.id === selectedUserId" />
+        <app-user [id]="user.id" [peyar]="user.name" [avatar]="user.avatar" />
       </li>
     }
   </ul>
 
-  @if (selectedUser) {
-    <app-tasks [peyar]="selectedUser.name" [id]="selectedUser.id" />
-  } @else {
-    <p id="fallback">{{ fallbackStatement }}</p>
-  }
+  <div>
+    <router-outlet />
+  </div>
 </main>
-
-<router-outlet />
