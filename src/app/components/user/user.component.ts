@@ -1,9 +1,9 @@
 import { Component, input, Input } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { CardComponent } from '../../shared/ui/card/card.component';
 
 import { capitalize1stLetter } from '../../shared/functions/capitalize1stLetter';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-user',
