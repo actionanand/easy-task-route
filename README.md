@@ -225,3 +225,18 @@ To configure the pre-commit hook, simply add a `precommit` npm script. We want t
 
 - [GitHub Actions for Angular](https://github.com/rodrigokamada/angular-github-actions)
 - [Angular 16 - milestone release](https://github.com/actionanand/ng16-signal-milestone-release)
+
+## Wiki
+
+1. Class-based Resolvers
+
+```ts
+@Injectable({ providedIn: 'root' })
+export class UserNameResolver implements Resolve<string> {
+  constructor(private usersService: UsersService) {}
+  resolve(activatedRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    const userName = this.usersService.users.find(u => u.id === activatedRoute.paramMap.get('userId'))?.name || '';
+    return userName;
+  }
+}
+```

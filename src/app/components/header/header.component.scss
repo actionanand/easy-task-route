@@ -31,6 +31,10 @@ p {
   text-wrap: balance;
 }
 
+header img:hover {
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   header {
     padding: 2rem;
