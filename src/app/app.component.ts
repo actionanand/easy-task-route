@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './components/header/header.component';
 import { UserComponent } from './components/user/user.component';
-import { TasksComponent } from './pages/tasks/tasks.component';
+import { TasksComponent } from './pages/user-task/tasks/tasks.component';
 import { UserServiceComponent } from './services/user.service';
 import { type User } from './model/user-data.model';
 

@@ -10,7 +10,7 @@ import { capitalize1stLetter } from '../../shared/functions/capitalize1stLetter'
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CardComponent],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss',
+  styleUrl: './user.component.css',
 })
 export class UserComponent {
   @Input({ required: true }) avatar!: string;

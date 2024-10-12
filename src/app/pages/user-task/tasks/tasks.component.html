@@ -1,0 +1,9 @@
+<ul>
+  @for (task of selectedTasks; track task) {
+    <li>
+      <app-task [taskData]="task" />
+    </li>
+  } @empty {
+    <p>{{ noTaskTitle }}</p>
+  }
+</ul>
