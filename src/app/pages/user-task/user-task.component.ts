@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Component, inject, input, computed, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, RouterLink, RouterOutlet, RouterStateSnapshot } from '@angular/router';
 // import { Input } from '@angular/core';
 // import { ActivatedRoute } from '@angular/router';
 // import { DestroyRef } from '@angular/core';
 
 import { TaskComponent } from '../../components/task/task.component';
-import { TaskServiceComponent } from '../../services/task.service';
-
 import { capitalize1stLetter } from '../../shared/functions/capitalize1stLetter';
 import { UserServiceComponent } from '../../services/user.service';
+import { TaskServiceComponent } from '../../services/task.service';
 
 @Component({
   selector: 'app-user-task',
@@ -23,6 +22,10 @@ export class UserTaskComponent implements OnInit {
   userId = input.required<string>();
   message = input<string>();
   userName = input<string>();
+  isNewtaskComAct = false;
+
+  private taskServ = inject(TaskServiceComponent);
+  private destroyRef = inject(DestroyRef);
 
   // userName = '';
   // uId!: string;
@@ -40,6 +43,12 @@ export class UserTaskComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Static Data from Route : ', this.message());
+
+    const taskServSub = this.taskServ.isNewTaskCompActv$.subscribe({
+      next: state => (this.isNewtaskComAct = state),
+    });
+
+    this.destroyRef.onDestroy(() => taskServSub.unsubscribe());
   }
 }
 

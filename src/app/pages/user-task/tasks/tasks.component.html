@@ -1,13 +1,15 @@
-<p>
-  <a routerLink="./" [queryParams]="{ order: order() === 'asc' ? 'desc' : 'asc' }">
-    Sort {{ order() === 'asc' ? 'Descending' : 'Ascending' }}
-  </a>
-</p>
+@if (selectedTasks().length > 0) {
+  <p>
+    <a routerLink="./" [queryParams]="{ order: order() === 'asc' ? 'desc' : 'asc' }">
+      Sort {{ order() === 'desc' ? 'Ascending' : 'Descending' }}
+    </a>
+  </p>
+}
 
 <ul>
   @for (task of selectedTasks(); track task) {
     <li>
-      <app-task [taskData]="task" />
+      <app-task [taskData]="task" (completeTask)="onCompleteTask($event)" />
     </li>
   } @empty {
     <p>{{ noTaskTitle }}</p>

@@ -240,3 +240,60 @@ export class UserNameResolver implements Resolve<string> {
   }
 }
 ```
+
+- [resolver with function based way](https://github.com/actionanand/easy-task-route/blob/master/src/app/pages/user-task/user-task.component.ts)
+
+2. Class-based Guards (deprecated)
+
+```ts
+@Injectable({ providedIn: 'root' })
+class CanMatchTeamSection implements CanMatch {
+  constructor(private router: Router) {}
+  canMatch(route: Route, segments: UrlSegment[]) {
+    const shouldGetAccess = Math.random();
+    if (shouldGetAccess < 0.5) {
+      return true;
+    }
+    return new RedirectCommand(this.router.parseUrl('/unauthorized'));
+  }
+}
+```
+
+- [canMatch with function based way](https://github.com/actionanand/easy-task-route/blob/master/src/app/app.routes.ts)
+
+```ts
+// `canMatch` in modern way
+import { Routes } from '@angular/router';
+
+export const abcTestingRoutes: Routes = [
+  {
+    path: '',
+    loadComponent: () => import('./a/a.component').then(m => m.AComponent),
+    canMatch: [() => d100() < 20],
+  },
+  {
+    path: '',
+    loadComponent: () => import('./b/b.component').then(m => m.BComponent),
+    canMatch: [() => d100() < 50],
+  },
+  {
+    path: '',
+    loadComponent: () => import('./c/c.component').then(m => m.CComponent),
+    canMatch: [() => d100() < 25],
+  },
+  {
+    path: '',
+    loadComponent: () => import('./d/d.component').then(m => m.DComponent),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];
+
+const d100 = (): number => Math.floor(Math.random() * 99) + 1;
+```
+
+- [Why You Should Use canMatch in Your Routes](https://medium.com/ngconf/why-you-should-use-canmatch-in-your-routes-97fec434823d)
+- [Router Guards In Angular (canActivate, canActivateChild, canDeactivate, canLoad, resolve)](https://bittukumar-web.medium.com/router-guards-in-angular-canactivate-canactivatechild-candeactivate-canload-resolve-8cc2519e70c)
+- [The difference between the canActivate and canActivateChild guards](https://timdeschryver.dev/blog/the-difference-between-the-canactivate-and-canactivatechild-guards#)

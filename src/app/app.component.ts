@@ -1,6 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
+
+import { filter } from 'rxjs';
 
 import { HeaderComponent } from './components/header/header.component';
 import { UserComponent } from './components/user/user.component';
@@ -16,11 +18,19 @@ import { type User } from './model/user-data.model';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  userServ = inject(UserServiceComponent);
+  private userServ = inject(UserServiceComponent);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   users: User[] = [];
 
   ngOnInit(): void {
     this.users = this.userServ.getAllUsers();
+
+    const navRouteSub = this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe({
+      next: filteredEvent => console.log('Current Route: ', filteredEvent),
+    });
+
+    this.destroyRef.onDestroy(() => navRouteSub.unsubscribe());
   }
 }
