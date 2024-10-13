@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 
 import { dummyTasks } from '../shared/local-data/dummy-tasks';
 import { type TaskData, type Task } from '../model/task-data.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskServiceComponent {
   private tasks: Task[] = dummyTasks;
+  private isNewTaskCompActv = new BehaviorSubject<boolean>(false);
+
+  isNewTaskCompActv$ = this.isNewTaskCompActv.asObservable();
 
   constructor() {
     const tasks = localStorage.getItem('tasks');
@@ -40,6 +44,10 @@ export class TaskServiceComponent {
     });
 
     this.saveTasksOnLocalStorage();
+  }
+
+  changeNewTaskCompState(state = false) {
+    this.isNewTaskCompActv.next(state);
   }
 
   private saveTasksOnLocalStorage() {
