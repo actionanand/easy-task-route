@@ -294,6 +294,56 @@ export const abcTestingRoutes: Routes = [
 const d100 = (): number => Math.floor(Math.random() * 99) + 1;
 ```
 
+3. Angular: Providers inside routes array
+
+```ts
+// my-service.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable() // `providedIn: 'root'` is not there
+export class MyService {
+  someData: string = 'Data from MyService';
+}
+```
+
+```ts
+// app.routes.ts
+import { Routes } from '@angular/router';
+import { MyComponent } from './my-component.component';
+import { Home } from './home.component';
+import { MyService } from './my-service.service';
+
+// const routes: Routes = [
+//   {
+//     path: '',
+//     component: HomeComponent,
+//   },
+//   {
+//     path: 'my-route',
+//     component: MyComponent,
+//   }
+// ];
+
+const routes: Routes = [
+  {
+    path: '',
+    providers: [MyService],
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'my-route',
+        component: MyComponent,
+      },
+    ],
+  },
+];
+```
+
 - [Why You Should Use canMatch in Your Routes](https://medium.com/ngconf/why-you-should-use-canmatch-in-your-routes-97fec434823d)
 - [Router Guards In Angular (canActivate, canActivateChild, canDeactivate, canLoad, resolve)](https://bittukumar-web.medium.com/router-guards-in-angular-canactivate-canactivatechild-candeactivate-canload-resolve-8cc2519e70c)
 - [The difference between the canActivate and canActivateChild guards](https://timdeschryver.dev/blog/the-difference-between-the-canactivate-and-canactivatechild-guards#)
+- [Lazy loading services in Angular. What?! Yes, we can.](https://push-based.io/article/lazy-loading-services-in-angular-what-yes-we-can)
+- [Angular: route providers explained](https://medium.com/@IgorPak-dev/angular-route-providers-explained-a652089cfda1)
