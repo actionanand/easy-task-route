@@ -4,8 +4,7 @@ import { inject } from '@angular/core';
 
 import { NoTaskComponent } from './pages/no-task/no-task.component';
 import { resolveTitle, resolveUserName, UserTaskComponent } from './pages/user-task/user-task.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { routes as userTaskRoutes } from './pages/user-task/task.routes';
+// import { routes as userTaskRoutes } from './pages/user-task/task.routes';
 
 const dummyMatch: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
   const router = inject(Router);
@@ -27,7 +26,8 @@ export const routes: Routes = [
   {
     path: 'users/:userId',
     component: UserTaskComponent,
-    children: userTaskRoutes,
+    loadChildren: () => import('./pages/user-task/task.routes').then(mod => mod.routes),
+    // children: userTaskRoutes,
     canMatch: [dummyMatch],
     // runGuardsAndResolvers: 'paramsOrQueryParamsChange',
     data: { message: 'Hello World!' },
@@ -38,7 +38,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent,
+    loadComponent: () => import('./pages/not-found/not-found.component').then(mod => mod.NotFoundComponent),
     title: 'Page Not Found - 404!',
   },
 ];
